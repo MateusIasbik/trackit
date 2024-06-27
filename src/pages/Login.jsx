@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../assets/logo.jpg"
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
+import UserContext from "../contexts/UserContext";
 
 export default function Login() {
-    const [token, setToken] = useState(localStorage.getItem("token"));
+    const { token, setToken } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if(token) {
+            navigate("/hoje");
+            return;
+        }
+    }, []);
+
     function sendLogin(e) {
         e.preventDefault();
+        
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
         const body = {
             email: email,
@@ -33,7 +42,6 @@ export default function Login() {
                 alert(`${err.response.data.message}`);
                 setLoading(false);
             });
-
     }
 
     return (

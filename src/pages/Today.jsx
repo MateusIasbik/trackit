@@ -4,7 +4,7 @@ import UserContext from "../contexts/UserContext";
 import axios from "axios";
 
 export default function Habits() {
-
+    
     const { token } = useContext(UserContext);
     const navigate = useNavigate();
     const [habits, setHabits] = useState([]);
@@ -12,6 +12,7 @@ export default function Habits() {
     useEffect(() => {
         if (!token) {
             navigate("/");
+            return;
         } else {
             const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today";
             const config = {
@@ -24,7 +25,7 @@ export default function Habits() {
                 .then(res => console.log(res.data))
                 .catch(err => setHabits(err))
         }
-    }, [token, navigate]);
+    }, []);
 
     return (
         <span>Página de hoje</span>
