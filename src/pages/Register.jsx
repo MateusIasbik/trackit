@@ -3,7 +3,7 @@ import logo from "../assets/logo.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import { RotatingLines, ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Register() {
     const [email, setEmail] = useState("");
