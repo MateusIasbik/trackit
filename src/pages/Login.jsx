@@ -3,10 +3,12 @@ import logo from "../assets/logo.jpg"
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     function sendLogin(e) {
@@ -17,9 +19,18 @@ export default function Login() {
             password: senha
         };
 
+        setLoading(true);
         axios.post(URL, body)
-            .then(() => navigate("/habitos"))
-            .catch(err => console.log(err.response.data));
+            .then((res) => {
+                localStorage.setItem("token", res.data.token)
+                navigate("/hoje")
+                setLoading(false)
+            })
+            .catch(err => {
+                alert(`${err.response.data.message}`)
+                setLoading(false)
+            });
+
     }
 
     return (
@@ -29,10 +40,11 @@ export default function Login() {
                 <FormDiv>
                     <input 
                         required
-                        type="text" 
+                        type="email" 
                         placeholder="email" 
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        disabled={loading}
                     />
 
                     <input 
@@ -41,9 +53,21 @@ export default function Login() {
                         placeholder="senha" 
                         value={senha}
                         onChange={e => setSenha(e.target.value)}
+                        disabled={loading}
                     />
 
-                    <button type="submit">Entrar</button>
+                    <button type="submit" disabled={loading}>
+                        {!loading ? "Entrar" : <ThreeDots
+                                visible={true}
+                                height="40"
+                                width="40"
+                                color="#ffffff"
+                                radius="9"
+                                ariaLabel="three-dots-loading"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                        />}
+                    </button>
                 </FormDiv>
             </form>
             <RegisterNewAccount to={`/cadastro`}>Não tem uma conta? Cadastre-se!</RegisterNewAccount>
@@ -98,6 +122,9 @@ const FormDiv = styled.div`
     }
 
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 45px;
         background-color: #52B6FF;
         border-radius: 5px;
@@ -106,6 +133,7 @@ const FormDiv = styled.div`
         font-family: "Lexend Deca", sans-serif;
         font-size: 21px;
         font-weight: 400;
+        cursor: pointer;    
     }
 `
 

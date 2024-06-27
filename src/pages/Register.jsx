@@ -3,15 +3,17 @@ import logo from "../assets/logo.jpg"
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { RotatingLines, ThreeDots } from "react-loader-spinner";
 
 export default function Register() {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [senha, setSenha] = useState("");
     const [photo, setPhoto] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    function createAccount(e){
+    function createAccount(e) {
         e.preventDefault();
 
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up";
@@ -22,9 +24,16 @@ export default function Register() {
             password: senha
         };
 
+        setLoading(true);
         axios.post(URL, body)
-            .then(() => navigate("/"))
-            .catch(err => console.log(err.response.data));
+            .then(() => {
+                navigate("/")
+                setLoading(false)
+            })
+            .catch(() => {
+                alert(`Verifique os campos digitados e tente novamente!`)
+                setLoading(false)
+            });
     }
 
     return (
@@ -32,39 +41,54 @@ export default function Register() {
             <img src={logo} alt="logo" />
             <form onSubmit={createAccount}>
                 <FormDiv>
-                    <input 
+                    <input
                         required
-                        type="text" 
-                        placeholder="email" 
+                        type="email"
+                        placeholder="email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        disabled={loading}
                     />
 
-                    <input 
+                    <input
                         required
-                        type="password" 
-                        placeholder="senha" 
+                        type="password"
+                        placeholder="senha"
                         value={senha}
                         onChange={e => setSenha(e.target.value)}
+                        disabled={loading}
                     />
 
-                    <input 
+                    <input
                         required
-                        type="text" 
-                        placeholder="nome" 
+                        type="text"
+                        placeholder="nome"
                         value={name}
                         onChange={e => setName(e.target.value)}
+                        disabled={loading}
                     />
 
-                    <input 
+                    <input
                         required
-                        type="text" 
-                        placeholder="foto" 
+                        type="text"
+                        placeholder="foto"
                         value={photo}
                         onChange={e => setPhoto(e.target.value)}
+                        disabled={loading}
                     />
-                    
-                    <button type="submit">Cadastrar</button>
+
+                    <button type="submit" disabled={loading}>
+                        {!loading ? "Cadastrar" : <ThreeDots
+                            visible={true}
+                            height="40"
+                            width="40"
+                            color="#ffffff"
+                            radius="9"
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                        />}
+                    </button>
                 </FormDiv>
             </form>
             <RegisterNewAccount to={`/`}>Já tem uma conta? Faça login!</RegisterNewAccount>
@@ -108,17 +132,20 @@ const FormDiv = styled.div`
         }
 
         &:hover {
-            border-color: #52B6FF; /* Cor da borda ao passar o mouse */
+            border-color: #52B6FF;
         }
 
         &:focus {
-            border-color: #52B6FF; /* Cor da borda ao focar */
+            border-color: #52B6FF;
             outline: none;
-            color: #52B6FF; /* Cor da fonte ao focar */
+            color: #52B6FF;
         }
     }
 
     button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 45px;
         background-color: #52B6FF;
         border-radius: 5px;
@@ -127,6 +154,7 @@ const FormDiv = styled.div`
         font-family: "Lexend Deca", sans-serif;
         font-size: 21px;
         font-weight: 400;
+        cursor: pointer;    
     }
 `
 

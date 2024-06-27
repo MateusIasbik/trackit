@@ -3,22 +3,26 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Register from "./pages/Register"
 import styled from "styled-components"
 import Login from "./pages/Login"
-import Habits from "./pages/Habits"
+import Today from "./pages/Today"
+import UserContext from "./contexts/UserContext"
 
 
 export default function App() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState(null);
 
   return (
-    <BrowserRouter>
-      <Container>
-        <Routes>
-          <Route path="/" element={<Login setToken={setToken} />} />
-          <Route path="/cadastro" element={<Register />} />
-          <Route path="/habitos" element={<Habits token={token} />} />
-        </Routes>
-      </Container>
-    </BrowserRouter>
+    <UserContext.Provider value={{user, setUser, token, setToken}}>
+      <BrowserRouter>
+        <Container>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/cadastro" element={<Register />} />
+            <Route path="/hoje" element={<Today />} />
+          </Routes>
+        </Container>
+      </BrowserRouter>
+    </UserContext.Provider>
   )
 }
 
