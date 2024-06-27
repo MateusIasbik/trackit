@@ -113,6 +113,37 @@ const BodyStyled = styled.div`
     background-color: #F2F2F2;
 `
 
+const TitleMenuContainer = styled.div`
+    width: 375px;
+    margin-top: 21px;
+    display: flex;
+    justify-content: space-between;
+
+    h2 {
+        color: #126BA5;
+        font-family: "Lexend Deca", sans-serif;
+        font-size: 23px;
+        font-weight: 400;
+        margin-left: 18px;
+    }
+
+    span {
+        background-color: #52B6FF;
+        width: 40px;
+        height: 35px;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Lexend Deca", sans-serif;
+        font-size: 27px;
+        font-weight: 400;
+        border-radius: 5px;
+        margin-right: 18px;
+    }
+
+`
+
 const Footer = styled.div`
     width: 100%;
     height: 65px;
@@ -151,35 +182,4 @@ const ButtonToday = styled.div`
     align-items: center;
     justify-content: start;
     padding-left: 60px;
-`
-
-const TitleMenuContainer = styled.div`
-    width: 375px;
-    margin-top: 21px;
-    display: flex;
-    justify-content: space-between;
-
-    h2 {
-        color: #126BA5;
-        font-family: "Lexend Deca", sans-serif;
-        font-size: 23px;
-        font-weight: 400;
-        margin-left: 18px;
-    }
-
-    span {
-        background-color: #52B6FF;
-        width: 40px;
-        height: 35px;
-        color: #FFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: "Lexend Deca", sans-serif;
-        font-size: 27px;
-        font-weight: 400;
-        border-radius: 5px;
-        margin-right: 18px;
-    }
-
 `
