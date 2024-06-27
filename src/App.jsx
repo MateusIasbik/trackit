@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Register from "./pages/Register"
 import styled from "styled-components"
@@ -10,6 +10,13 @@ import UserContext from "./contexts/UserContext"
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storageToken = localStorage.getItem("token");
+    if(storageToken) {
+      setToken(storageToken);
+    }
+  }, [])
 
   return (
     <UserContext.Provider value={{user, setUser, token, setToken}}>

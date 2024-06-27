@@ -6,6 +6,7 @@ import axios from "axios";
 import { ThreeDots } from "react-loader-spinner";
 
 export default function Login() {
+    const [token, setToken] = useState(localStorage.getItem("token"));
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [loading, setLoading] = useState(false);
@@ -22,13 +23,15 @@ export default function Login() {
         setLoading(true);
         axios.post(URL, body)
             .then((res) => {
-                localStorage.setItem("token", res.data.token)
-                navigate("/hoje")
-                setLoading(false)
+                const token = res.data.token;
+                localStorage.setItem("token", token);
+                setToken(token);
+                navigate("/hoje");
+                setLoading(false);
             })
             .catch(err => {
-                alert(`${err.response.data.message}`)
-                setLoading(false)
+                alert(`${err.response.data.message}`);
+                setLoading(false);
             });
 
     }
