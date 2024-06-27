@@ -8,7 +8,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Habits from "../components/Habits";
 
-export default function Habits() {
+export default function Today() {
 
     const { token } = useContext(UserContext);
     const navigate = useNavigate();
