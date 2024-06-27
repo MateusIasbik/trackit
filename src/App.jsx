@@ -11,13 +11,6 @@ export default function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const storageToken = localStorage.getItem("token");
-    if(storageToken) {
-      setToken(storageToken);
-    }
-  }, [])
-
   return (
     <UserContext.Provider value={{user, setUser, token, setToken}}>
       <BrowserRouter>

@@ -21,8 +21,8 @@ export default function Habits() {
             };
 
             axios.get(URL, config)
-                .then(res => console.log(res))
-                .catch(err => console.log(err))
+                .then(res => console.log(res.data))
+                .catch(err => setHabits(err))
         }
     }, [token, navigate]);
 
