@@ -1,19 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
-import logo from "../assets/logo.jpg"
 
 export default function Top() {
-
-    const { token, user } = useContext(UserContext);
-    const [faceImg, setFaceImg] = useState(logo);
+    
+    const { token } = useContext(UserContext);
+    const [faceImg, setFaceImg] = useState("");
+    const face = localStorage.getItem("imgFace");
 
     useEffect(() => {
-        if(token && user !== null) {
-            setFaceImg(user.image);
-        } else {
-            setFaceImg(logo);
-        }
+        if(token) {
+            setFaceImg(face);
+        } 
     }, [])
 
     return (

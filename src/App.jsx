@@ -6,34 +6,31 @@ import Login from "./pages/Login"
 import Today from "./pages/Today"
 import UserContext from "./contexts/UserContext"
 import Habits from "./components/Habits"
-import Top from "./components/Top"
-import Menu from "./components/Menu"
 
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
+  const [imgFace, setImgFace] = useState(null);
 
   useEffect(() => {
     const storageToken = localStorage.getItem("token");
-    if(storageToken) {
+    if (storageToken) {
       setToken(storageToken);
     }
-    
+
   }, [])
 
   return (
-    <UserContext.Provider value={{user, setUser, token, setToken}}>
+    <UserContext.Provider value={{ user, setUser, token, setToken, imgFace, setImgFace }}>
       <BrowserRouter>
         <Container>
-          <Top />
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/cadastro" element={<Register />} />
             <Route path="/hoje" element={<Today />} />
             <Route path="/habitos" element={<Habits />} />
           </Routes>
-          <Menu />
         </Container>
       </BrowserRouter>
     </UserContext.Provider>

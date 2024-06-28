@@ -1,21 +1,27 @@
 import React from "react";
 import styled from "styled-components";
+import HabitsInformation from "./HabitsInformation";
+import Top from "./Top";
+import Menu from "./Menu";
+import Add from "./Add";
 
 export default function Habits() {
 
     return (
         <Container>
+            <Top />
             <BodyStyled>
                 <TitleMenuContainer>
                     <h2>Meus hábitos</h2>
-                    <span>+</span>
+                    <Add />
                 </TitleMenuContainer>
 
                 <Content>
-                    Hábitos
+                    <HabitsInformation />
                 </Content>
 
             </BodyStyled>
+            <Menu />
         </Container>
     )
 }
@@ -56,21 +62,6 @@ const TitleMenuContainer = styled.div`
         font-size: 23px;
         font-weight: 400;
         margin-left: 18px;
-    }
-
-    span {
-        background-color: #52B6FF;
-        width: 40px;
-        height: 35px;
-        color: #FFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: "Lexend Deca", sans-serif;
-        font-size: 27px;
-        font-weight: 400;
-        border-radius: 5px;
-        margin-right: 22px;
     }
 
 `

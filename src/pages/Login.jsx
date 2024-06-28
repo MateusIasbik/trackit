@@ -7,7 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../contexts/UserContext";
 
 export default function Login() {
-    const { token, setToken } = useContext(UserContext);
+    const { token, setToken, setImgFace } = useContext(UserContext);
     const {setUser} = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -25,7 +25,7 @@ export default function Login() {
 
     function sendLogin(e) {
         e.preventDefault();
-        
+
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
         const body = {
             email: email,
@@ -36,6 +36,10 @@ export default function Login() {
         axios.post(URL, body)
             .then((res) => {
                 console.log(res.data.image);
+                setImgFace(res.data.image)
+                const imgFace = res.data.image;
+                localStorage.setItem("imgFace", imgFace);
+
                 setUser(res.data);
                 const token = res.data.token;
                 localStorage.setItem("token", token);
