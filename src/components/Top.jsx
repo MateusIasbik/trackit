@@ -6,12 +6,14 @@ import logo from "../assets/logo.jpg"
 export default function Top() {
 
     const { token, user } = useContext(UserContext);
-    const [faceImg, setFaceImg] = useState(logo)
+    const [faceImg, setFaceImg] = useState(logo);
 
     useEffect(() => {
-        if(token) {
+        if(token && user !== null) {
             setFaceImg(user.image);
-        } 
+        } else {
+            setFaceImg(logo);
+        }
     }, [])
 
     return (
@@ -31,7 +33,7 @@ const HeadStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Playball", cursive;
+    font-family: "Playball", "cursive", sans-serif;
     font-size: 39px;
     font-weight: 400;
     color: #FFF;

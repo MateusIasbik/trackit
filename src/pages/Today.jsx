@@ -3,17 +3,16 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from "styled-components";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Habits from "../components/Habits";
 import Top from "../components/Top";
+import Menu from "../components/Menu";
 
 export default function Today() {
 
     const { token } = useContext(UserContext);
     const navigate = useNavigate();
-    const [habits, setHabits] = useState([]);
-
+    // const [habits, setHabits] = useState([]);
+    const [showHabits, setShowHabits] = useState(false);
 
     useEffect(() => {
         if (!token) {
@@ -27,9 +26,9 @@ export default function Today() {
                 }
             };
 
-            axios.get(URL, config)
-                .then(res => console.log(res.data))
-                .catch(err => setHabits(err))
+            // axios.get(URL, config)
+            //     .then(res => console.log(res.data))
+            //     .catch(err => setHabits(err))
         }
     }, []);
 
@@ -42,23 +41,10 @@ export default function Today() {
                     <h2>Meus hábitos</h2>
                     <span>+</span>
                 </TitleMenuContainer>
-                <Habits />
+                {showHabits ? <Habits /> : "Hoje foi clicado"}
             </BodyStyled>
 
-            <Footer>
-                <ButtonHabit>
-                    <CalendarMonthIcon />
-                    <span>
-                        Hábitos
-                    </span>
-                </ButtonHabit>
-                <ButtonToday>
-                    <EventAvailableIcon />
-                    <span>
-                        Hoje
-                    </span>
-                </ButtonToday>
-            </Footer>
+            <Menu setShowHabits={setShowHabits}/>
         </Container>
     )
 }
@@ -104,55 +90,7 @@ const TitleMenuContainer = styled.div`
         font-size: 27px;
         font-weight: 400;
         border-radius: 5px;
-        margin-right: 18px;
+        margin-right: 22px;
     }
 
-`
-
-const Footer = styled.div`
-    width: 100%;
-    height: 65px;
-    background-color: #F2F2F2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-`
-
-const ButtonHabit = styled.div`
-    height: 100%;
-    width: 50%;
-    color: #FFF;
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    background-color: #52B6FF;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    padding-right: 45px;
-
-    span {
-        padding-left: 5px;
-    }
-`
-
-const ButtonToday = styled.div`
-    height: 100%;
-    width: 50%;
-    color: #D4D4D4;
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    background-color: #FFFFFF;  
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    padding-left: 55px;
-
-    span {
-        padding-left: 5px;
-    }
 `

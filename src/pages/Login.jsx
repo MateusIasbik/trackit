@@ -18,6 +18,8 @@ export default function Login() {
         if(token) {
             navigate("/hoje");
             return;
+        } else {
+            navigate("/");
         }
     }, []);
 
@@ -154,4 +156,5 @@ const FormDiv = styled.div`
 const RegisterNewAccount = styled(Link)`
     color: #52B6FF;
     margin-top: 25px;
+    font-family: "Lexend Deca", sans-serif;
 `
