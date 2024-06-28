@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Menu( {setShowHabits} ) {
+export default function Menu() {
 
     const navigate = useNavigate();
 
     return (
         <Footer>
-            <ButtonHabit 
+            <ButtonHabit
                 onClick={() => {
-                    setShowHabits(true);
-                    navigate("/habits");
-                }} 
-                to={"/habitos"} 
+                    navigate("/habitos");
+                }}
+                to={"/habitos"}
             >
                 <CalendarMonthIcon />
                 <span>
@@ -23,12 +22,11 @@ export default function Menu( {setShowHabits} ) {
                 </span>
             </ButtonHabit>
 
-            <ButtonToday  
+            <ButtonToday
                 onClick={() => {
-                    setShowHabits(false);
-                    // navigate("/habits");
-                }} 
-                to={"/hoje"} 
+                    navigate("/hoje");
+                }}
+                to={"/hoje"}
             >
                 <EventAvailableIcon />
                 <span>
@@ -63,6 +61,7 @@ const ButtonHabit = styled(Link)`
     align-items: center;
     justify-content: end;
     padding-right: 45px;
+    text-decoration: none;
 
     span {
         padding-left: 5px;
@@ -81,6 +80,7 @@ const ButtonToday = styled.div`
     align-items: center;
     justify-content: start;
     padding-left: 55px;
+    text-decoration: none;
 
     span {
         padding-left: 5px;

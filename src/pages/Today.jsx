@@ -1,18 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
-import axios from "axios";
 import styled from "styled-components";
-import Habits from "../components/Habits";
-import Top from "../components/Top";
-import Menu from "../components/Menu";
 
 export default function Today() {
 
     const { token } = useContext(UserContext);
     const navigate = useNavigate();
-    // const [habits, setHabits] = useState([]);
-    const [showHabits, setShowHabits] = useState(false);
+
 
     useEffect(() => {
         if (!token) {
@@ -25,26 +20,24 @@ export default function Today() {
                     Authorization: `Bearer ${token}`
                 }
             };
-
-            // axios.get(URL, config)
-            //     .then(res => console.log(res.data))
-            //     .catch(err => setHabits(err))
         }
     }, []);
 
     return (
         <Container>
-            <Top />
 
             <BodyStyled>
                 <TitleMenuContainer>
                     <h2>Meus hábitos</h2>
                     <span>+</span>
                 </TitleMenuContainer>
-                {showHabits ? <Habits /> : "Hoje foi clicado"}
+
+                <Content>
+                    Hoje
+                </Content>
+
             </BodyStyled>
 
-            <Menu setShowHabits={setShowHabits}/>
         </Container>
     )
 }
@@ -64,9 +57,16 @@ const BodyStyled = styled.div`
     background-color: #F2F2F2;
 `
 
+const Content = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+`
+
 const TitleMenuContainer = styled.div`
     width: 375px;
     margin-top: 21px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
 
