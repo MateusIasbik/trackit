@@ -5,11 +5,21 @@ import styled from "styled-components"
 import Login from "./pages/Login"
 import Today from "./pages/Today"
 import UserContext from "./contexts/UserContext"
+import Habits from "./components/Habits"
 
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
+
+
+  useEffect(() => {
+    const storageToken = localStorage.getItem("token");
+    if(storageToken) {
+      setToken(storageToken);
+    }
+    
+  }, [])
 
   return (
     <UserContext.Provider value={{user, setUser, token, setToken}}>
@@ -19,6 +29,7 @@ export default function App() {
             <Route path="/" element={<Login />} />
             <Route path="/cadastro" element={<Register />} />
             <Route path="/hoje" element={<Today />} />
+            <Route path="/habitos" element={<Habits />} />
           </Routes>
         </Container>
       </BrowserRouter>

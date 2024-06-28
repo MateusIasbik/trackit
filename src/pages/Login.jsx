@@ -8,6 +8,7 @@ import UserContext from "../contexts/UserContext";
 
 export default function Login() {
     const { token, setToken } = useContext(UserContext);
+    const {setUser} = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [loading, setLoading] = useState(false);
@@ -32,6 +33,8 @@ export default function Login() {
         setLoading(true);
         axios.post(URL, body)
             .then((res) => {
+                console.log(res.data.image);
+                setUser(res.data);
                 const token = res.data.token;
                 localStorage.setItem("token", token);
                 setToken(token);

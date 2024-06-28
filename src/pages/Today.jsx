@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
 import styled from "styled-components";
-import logo from "../assets/logo.jpg"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import Habits from "../components/Habits";
+import Top from "../components/Top";
 
 export default function Today() {
 
@@ -35,12 +35,7 @@ export default function Today() {
 
     return (
         <Container>
-            <HeadStyled>
-                <div>
-                    <h1>TrackIt</h1>
-                    <img src={logo} alt="" />
-                </div>
-            </HeadStyled>
+            <Top />
 
             <BodyStyled>
                 <TitleMenuContainer>
@@ -75,36 +70,6 @@ const Container = styled.div`
     height: 100vh;
     align-items: center;
     margin: 70px 0;
-`
-
-const HeadStyled = styled.div`
-    height: 70px;
-    width: 100%;
-    background-color: #126BA5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Playball", cursive;
-    font-size: 39px;
-    font-weight: 400;
-    color: #FFF;
-    box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.15);
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    div {
-    width: 375px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 18px;
-    }
-
-    img {
-        border-radius: 50%;
-        height: 51px;
-    }
 `
 
 const BodyStyled = styled.div`
@@ -168,6 +133,10 @@ const ButtonHabit = styled.div`
     align-items: center;
     justify-content: end;
     padding-right: 45px;
+
+    span {
+        padding-left: 5px;
+    }
 `
 
 const ButtonToday = styled.div`
@@ -181,5 +150,9 @@ const ButtonToday = styled.div`
     display: flex;
     align-items: center;
     justify-content: start;
-    padding-left: 60px;
+    padding-left: 55px;
+
+    span {
+        padding-left: 5px;
+    }
 `
