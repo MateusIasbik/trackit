@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import HabitsInformation from "./HabitsInformation";
 import Top from "./Top";
 import Menu from "./Menu";
-import Add from "./Add";
 
 export default function Habits() {
 
+    const [showAddHabit, setShowAddHabit] = useState(false);
+
+    function toggleAddHabit() {
+        setShowAddHabit(habitState => !habitState);
+    }
+    
     return (
         <Container>
             <Top />
             <BodyStyled>
                 <TitleMenuContainer>
                     <h2>Meus hábitos</h2>
-                    <Add />
+                    <PlusButton onClick={toggleAddHabit}>+</PlusButton>
                 </TitleMenuContainer>
 
                 <Content>
-                    <HabitsInformation />
+                    <HabitsInformation showAddHabit={showAddHabit} setShowAddHabit={setShowAddHabit} />
                 </Content>
 
             </BodyStyled>
@@ -55,6 +60,7 @@ const TitleMenuContainer = styled.div`
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
+    padding-left: 8px;
 
     h2 {
         color: #126BA5;
@@ -64,4 +70,35 @@ const TitleMenuContainer = styled.div`
         margin-left: 18px;
     }
 
+    span {
+        background-color: #52B6FF;
+        width: 40px;
+        height: 35px;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Lexend Deca", sans-serif;
+        font-size: 27px;
+        font-weight: 400;
+        border-radius: 5px;
+        margin-right: 22px;
+    }
+
 `
+
+const PlusButton = styled.div`
+    background-color: #52B6FF;
+    width: 40px;
+    height: 35px;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 27px;
+    font-weight: 400;
+    border-radius: 5px;
+    margin-right: 15px;
+`
+

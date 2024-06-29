@@ -5,12 +5,10 @@ import styled from "styled-components";
 import TodayInformation from "../components/TodayInformations";
 import Top from "../components/Top";
 import Menu from "../components/Menu";
-import axios from "axios";
-import Add from "../components/Add";
 
 export default function Today() {
 
-    const { token, setToken } = useContext(UserContext);
+    const { token } = useContext(UserContext);
     const navigate = useNavigate();
 
 
@@ -25,11 +23,7 @@ export default function Today() {
         <Container>
             <Top />
             <BodyStyled>
-                <TitleMenuContainer>
-                    <h2>Meus hábitos</h2>
-                    <Add />
-                </TitleMenuContainer>
-
+                
                 <Content>
                     <TodayInformation />
                 </Content>
@@ -44,9 +38,10 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     height: 100vh;
     align-items: center;
-    margin: 70px 0;
+    margin-top: 70px;
 `
 
 const BodyStyled = styled.div`
@@ -56,24 +51,8 @@ const BodyStyled = styled.div`
 `
 
 const Content = styled.div`
-        display: flex;
-        justify-content: center;
-        align-items: center;
-`
-
-const TitleMenuContainer = styled.div`
-    width: 375px;
-    margin-top: 21px;
-    margin-bottom: 20px;
     display: flex;
-    justify-content: space-between;
-
-    h2 {
-        color: #126BA5;
-        font-family: "Lexend Deca", sans-serif;
-        font-size: 23px;
-        font-weight: 400;
-        margin-left: 18px;
-    }
-
+    justify-content: center;
+    align-items: center;
 `
+
