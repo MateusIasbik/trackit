@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function TodayInformation() {
     return (
         <TitleMenuContainer>
-            <h2>Sábado, 29/06</h2>
+            
             <ContentToday>
                 Informações de hoje
             </ContentToday>
@@ -19,14 +19,6 @@ const TitleMenuContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    h2 {
-        color: #126BA5;
-        font-family: "Lexend Deca", sans-serif;
-        font-size: 23px;
-        font-weight: 400;
-        margin-left: 18px;
-    }
 
     span {
         background-color: #52B6FF;

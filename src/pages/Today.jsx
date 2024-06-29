@@ -23,7 +23,9 @@ export default function Today() {
         <Container>
             <Top />
             <BodyStyled>
-                
+                <TitleToday>
+                    <h2>Sábado, 29/06</h2>
+                </TitleToday>
                 <Content>
                     <TodayInformation />
                 </Content>
@@ -41,16 +43,34 @@ const Container = styled.div`
     justify-content: center;
     height: 100vh;
     align-items: center;
-    margin-top: 70px;
 `
 
 const BodyStyled = styled.div`
     width: 100%;
     height: 100%;
     background-color: #F2F2F2;
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const TitleToday = styled.div`
+    display: flex;
+    width: 370px;
+    margin-top: 27px;
+
+    h2 {
+            color: #126BA5;
+            font-family: "Lexend Deca", sans-serif;
+            font-size: 23px;
+            font-weight: 400;
+            margin-left: 18px;
+        }
 `
 
 const Content = styled.div`
+    width: 340px;
     display: flex;
     justify-content: center;
     align-items: center;

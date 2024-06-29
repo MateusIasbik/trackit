@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../contexts/UserContext";
 import styled from "styled-components";
-import Habits from "./Habits";
 
 export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
 
@@ -32,29 +31,17 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
 
     }, []);
 
-    if (habits === null) {
-        return (
-            <div><ThreeDots
-                visible={true}
-                height="40"
-                width="40"
-                color="#126BA5"
-                radius="9"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-            /></div>
-        )
-    } else if (habits.length === 0) {
-        return (
-            <MessageEmpty>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</MessageEmpty>
-        )
+    function sendHabit(e) {
+        e.preventDefault();
+        setShowAddHabit(false);
+        console.log("hábito salvo")
     }
 
     return (
-    <div>
+        <div>
+
             {showAddHabit && (
-                <form>
+                <form onSubmit={sendHabit}>
                     <BoxHabits>
                         <BoxHabitsTop>
                             <input
@@ -62,24 +49,68 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                                 placeholder="nome do hábito"
                             />
                             <DayHabits>
-                                <p>D</p>
-                                <p>S</p>
-                                <p>T</p>
-                                <p>Q</p>
-                                <p>Q</p>
-                                <p>S</p>
-                                <p>S</p>
+                                <p onClick={() => console.log("Clicado")}>D</p>
+                                <p onClick={() => console.log("Clicado")}>S</p>
+                                <p onClick={() => console.log("Clicado")}>T</p>
+                                <p onClick={() => console.log("Clicado")}>Q</p>
+                                <p onClick={() => console.log("Clicado")}>Q</p>
+                                <p onClick={() => console.log("Clicado")}>S</p>
+                                <p onClick={() => console.log("Clicado")}>S</p>
                             </DayHabits>
                         </BoxHabitsTop>
 
                         <BoxHabitsBottom>
                             <p onClick={() => setShowAddHabit(false)}>
-                            Cancelar
+                                Cancelar
                             </p>
-                            <button>Salvar</button>
+                            <button type="submit" >Salvar</button>
                         </BoxHabitsBottom>
                     </BoxHabits>
                 </form>
+            )}
+
+            {habits === null && (
+                <div>
+                    <ThreeDots
+                        visible={true}
+                        height="40"
+                        width="40"
+                        color="#126BA5"
+                        radius="9"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    />
+                </div>
+            )}
+
+            {habits && habits.length === 0 && (
+                <MessageEmpty>
+                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                </MessageEmpty>
+            )}
+
+            {habits && habits.length > 0 && (
+                <>
+                    {habits.map(habit => {
+                        return (
+                            <HabitsDisplayed>
+                            <span key={habit.id}>
+                            <h2>{habit.name}</h2>
+                        </span>
+                        <DayHabits>
+                            <p>D</p>
+                            <p>S</p>
+                            <p>T</p>
+                            <p>Q</p>
+                            <p>Q</p>
+                            <p>S</p>
+                            <p>S</p>
+                        </DayHabits>
+                            </HabitsDisplayed>
+                        )
+                    })}
+                </>
             )}
 
         </div>
@@ -90,8 +121,9 @@ const MessageEmpty = styled.div`
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     font-weight: 400;
-    padding: 0 17px;
+    padding: 0 30px;
     text-align: left;
+    margin-top: 20px;
  `
 
 const BoxHabits = styled.div`
@@ -128,9 +160,9 @@ const BoxHabits = styled.div`
 }
 
     &:focus {
-        border-color: #52B6FF;
+        border-color: #666666;
     outline: none;
-    color: #52B6FF;
+    color: #666666;
 }
 }
 `
@@ -193,38 +225,31 @@ const BoxHabitsBottom = styled.div`
     }
 `
 
-const Habit = styled.div`
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #FFF;
-    border-radius: 5px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
-`;
-
-const HabitName = styled.h3`
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: #126BA5;
-`;
-
-const Days = styled.div`
+const HabitsDisplayed = styled.div`
+    width: 340px;
+    height: 91px;
     display: flex;
-    justify-content: start;
-    align-items: center;
-`;
-
-const Day = styled.div`
-    margin-right: 4px;
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-    background-color: #52B6FF;
-    color: #FFF;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: "Lexend Deca", sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-`;
+    background-color: #FFF;
+    margin-top: 10px;
+    border-radius: 5px;
+
+    span {
+        width: 340px;
+        margin-left: 40px;
+        display: flex;
+        justify-content: start;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-family: "Lexend Deca", sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        color: #666666;
+    }
+
+
+`
