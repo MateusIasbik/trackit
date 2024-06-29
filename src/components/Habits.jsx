@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import HabitsInformation from "./HabitsInformation";
 import Top from "./Top";
 import Menu from "./Menu";
+import UserContext from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Habits() {
 
+    const {token} = useContext(UserContext);
+    const navigate = useNavigate()
     const [showAddHabit, setShowAddHabit] = useState(false);
 
-    function buttonAddHabit() {
-        setShowAddHabit(() => setShowAddHabit(true));
+    function toggleAddHabit() {
+        setShowAddHabit(habitState => !habitState);
     }
+
+    useEffect(() => {
+        if (!token) {
+            navigate("/");
+            return;
+        }
+    }, []);
     
     return (
         <Container>
@@ -18,7 +29,7 @@ export default function Habits() {
             <BodyStyled>
                 <TitleMenuContainer>
                     <h2>Meus hábitos</h2>
-                    <PlusButton onClick={buttonAddHabit}>+</PlusButton>
+                    <PlusButton onClick={toggleAddHabit}>+</PlusButton>
                 </TitleMenuContainer>
 
                 <Content>
@@ -36,18 +47,19 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     align-items: center;
 `
 
 const BodyStyled = styled.div`
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background-color: #F2F2F2;
     margin-top: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 80px;
 `
 
 const Content = styled.div`

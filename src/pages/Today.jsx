@@ -5,12 +5,16 @@ import styled from "styled-components";
 import TodayInformation from "../components/TodayInformations";
 import Top from "../components/Top";
 import Menu from "../components/Menu";
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
+
+dayjs.locale('pt-br');
 
 export default function Today() {
 
     const { token } = useContext(UserContext);
     const navigate = useNavigate();
-
+    const currentDay = dayjs().format('dddd, DD/MM');
 
     useEffect(() => {
         if (!token) {
@@ -24,12 +28,11 @@ export default function Today() {
             <Top />
             <BodyStyled>
                 <TitleToday>
-                    <h2>Sábado, 29/06</h2>
+                    <h2>{currentDay}</h2>
                 </TitleToday>
                 <Content>
                     <TodayInformation />
                 </Content>
-
             </BodyStyled>
             <Menu />
         </Container>
@@ -41,18 +44,19 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     align-items: center;
 `
 
 const BodyStyled = styled.div`
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background-color: #F2F2F2;
     margin-top: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 80px;
 `
 
 const TitleToday = styled.div`

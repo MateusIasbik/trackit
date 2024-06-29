@@ -8,9 +8,16 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
 
     const { token } = useContext(UserContext);
     const [habits, setHabits] = useState(null);
+    const [dayClicked, setDayClicked] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [nameHabit, setNameHabit] = useState("");
 
     useEffect(() => {
 
+        fetchHabits();
+    }, []);
+
+    const fetchHabits = () => {
         if (!token) {
             console.log("Token não está disponível");
             return;
@@ -29,13 +36,63 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
             })
             .catch(err => console.log(err.response.data));
 
-    }, []);
+    };
 
     function sendHabit(e) {
         e.preventDefault();
         setShowAddHabit(false);
-        console.log("hábito salvo")
+        
+        if(dayClicked.length === 0) {
+            alert("Selecione no mínimo um dia da semana!")
+            setShowAddHabit(true);
+        }
+
+        const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+        const body = {
+            name: nameHabit,
+            days: dayClicked
+        }
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        setLoading(true);
+        axios.post(URL, body, config)
+            .then(res => {
+                console.log(res.data);
+                setNameHabit("");
+                setDayClicked([]);
+                fetchHabits();
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+                setLoading(false);
+            })
+            
+
     }
+
+    const handleDayClick = (day) => {
+        setDayClicked(prevDays => {
+            if (prevDays.includes(day)) {
+                return prevDays.filter(d => d !== day);
+            } else {
+                return [...prevDays, day];
+            }
+        });
+    };
+
+    const isDayClicked = (day) => {
+        return dayClicked.includes(day);
+    };
+
+    const isDayInHabit = (day, habitDays) => {
+        return habitDays.includes(day);
+    };
 
     return (
         <div>
@@ -45,17 +102,21 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                     <BoxHabits>
                         <BoxHabitsTop>
                             <input
+                                required
                                 type="text"
                                 placeholder="nome do hábito"
+                                value={nameHabit}
+                                onChange={e => setNameHabit(e.target.value)}
+                                disabled={loading}
                             />
                             <DayHabits>
-                                <p onClick={() => console.log("Clicado")}>D</p>
-                                <p onClick={() => console.log("Clicado")}>S</p>
-                                <p onClick={() => console.log("Clicado")}>T</p>
-                                <p onClick={() => console.log("Clicado")}>Q</p>
-                                <p onClick={() => console.log("Clicado")}>Q</p>
-                                <p onClick={() => console.log("Clicado")}>S</p>
-                                <p onClick={() => console.log("Clicado")}>S</p>
+                                <DayButton disabled={loading} clicked={isDayClicked(0)} onClick={() => handleDayClick(0)}>D</DayButton>
+                                <DayButton disabled={loading} clicked={isDayClicked(1)} onClick={() => handleDayClick(1)}>S</DayButton>
+                                <DayButton disabled={loading} clicked={isDayClicked(2)} onClick={() => handleDayClick(2)}>T</DayButton>
+                                <DayButton disabled={loading} clicked={isDayClicked(3)} onClick={() => handleDayClick(3)}>Q</DayButton>
+                                <DayButton disabled={loading} clicked={isDayClicked(4)} onClick={() => handleDayClick(4)}>Q</DayButton>
+                                <DayButton disabled={loading} clicked={isDayClicked(5)} onClick={() => handleDayClick(5)}>S</DayButton>
+                                <DayButton disabled={loading} clicked={isDayClicked(6)} onClick={() => handleDayClick(6)}>S</DayButton>
                             </DayHabits>
                         </BoxHabitsTop>
 
@@ -63,7 +124,18 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                             <p onClick={() => setShowAddHabit(false)}>
                                 Cancelar
                             </p>
-                            <button type="submit" >Salvar</button>
+                            <button type="submit" disabled={loading}>
+                        {!loading ? "Salvar" : <ThreeDots
+                                visible={true}
+                                height="20"
+                                width="20"
+                                color="#ffffff"
+                                radius="9"
+                                ariaLabel="three-dots-loading"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                        />}
+                    </button>
                         </BoxHabitsBottom>
                     </BoxHabits>
                 </form>
@@ -94,19 +166,19 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                 <>
                     {habits.map(habit => {
                         return (
-                            <HabitsDisplayed>
-                            <span key={habit.id}>
-                            <h2>{habit.name}</h2>
-                        </span>
-                        <DayHabits>
-                            <p>D</p>
-                            <p>S</p>
-                            <p>T</p>
-                            <p>Q</p>
-                            <p>Q</p>
-                            <p>S</p>
-                            <p>S</p>
-                        </DayHabits>
+                            <HabitsDisplayed key={habit.id}>
+                                <span>
+                                    <h2>{habit.name}</h2>
+                                </span>
+                                <DayHabits>
+                                    <DayButton disabled={false} clicked={isDayInHabit(0, habit.days)}>D</DayButton>
+                                    <DayButton disabled={false} clicked={isDayInHabit(1, habit.days)}>S</DayButton>
+                                    <DayButton disabled={false} clicked={isDayInHabit(2, habit.days)}>T</DayButton>
+                                    <DayButton disabled={false} clicked={isDayInHabit(3, habit.days)}>Q</DayButton>
+                                    <DayButton disabled={false} clicked={isDayInHabit(4, habit.days)}>Q</DayButton>
+                                    <DayButton disabled={false} clicked={isDayInHabit(5, habit.days)}>S</DayButton>
+                                    <DayButton disabled={false} clicked={isDayInHabit(6, habit.days)}>S</DayButton>
+                                </DayHabits>
                             </HabitsDisplayed>
                         )
                     })}
@@ -250,6 +322,19 @@ const HabitsDisplayed = styled.div`
         font-weight: 400;
         color: #666666;
     }
+`
 
-
+const DayButton = styled.p`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #D4D4D4;
+    height: 100%;
+    width: 30px;
+    border-radius: 5px;
+    margin-right: 4px;
+    margin-top: 8px;
+    cursor: pointer;
+    background-color: ${({ clicked }) => (clicked ? '#CFCFCF' : 'transparent')};
+    color: ${({ clicked }) => (clicked ? '#FFF' : '#D4D4D4')};
 `
