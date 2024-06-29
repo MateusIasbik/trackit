@@ -121,7 +121,10 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                         </BoxHabitsTop>
 
                         <BoxHabitsBottom>
-                            <p onClick={() => setShowAddHabit(false)}>
+                            <p onClick={() => {
+                                setShowAddHabit(false);
+                                setDayClicked([]);
+                            }}>
                                 Cancelar
                             </p>
                             <button type="submit" disabled={loading}>
