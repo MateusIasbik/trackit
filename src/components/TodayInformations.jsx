@@ -6,8 +6,10 @@ import axios from "axios";
 
 export default function TodayInformation() {
 
+    const BASEURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const { token } = useContext(UserContext);
     const [habits, setHabits] = useState([]);
+
 
     useEffect(() => {
 
@@ -17,21 +19,18 @@ export default function TodayInformation() {
             }
         };
 
-        axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
+        axios.get(`${BASEURL}/today`, config)
             .then(res => {
-                const updatedHabits = res.data.map(habit => ({ ...habit, clicked: false }));
-                setHabits(updatedHabits);
+                setHabits(res.data);
             })
             .catch(err => console.log(err.response.data));
 
-    }, [token]);
+    }, []);
 
+    function IconClickedWhenDoneIsFalse(id) {
 
-
-    function IconClicked(id) {
-
-        setHabits(habits.map(habit => 
-            habit.id === id ? { ...habit, clicked : !habit.clicked } : habit
+        setHabits(habits.map(habit =>
+            habit.id === id ? { ...habit, done: !habit.done } : habit
         ));
 
         const config = {
@@ -40,29 +39,41 @@ export default function TodayInformation() {
             }
         };
 
-        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {}, config)
-            .then(res => {
-                console.log(res);
+
+        axios.post(`${BASEURL}/${id}/check`, {}, config)
+            .then(() => {
                 setHabits(habits.map(habit =>
                     habit.id === id ? { ...habit, done: true } : habit
-                ));    
+                ));
             })
-            .catch(err => console.log(err.response.data));
-
-        if(habits === false) {
-            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {}, config)
-            .then(res => {
-                console.log(res);
-                setHabits(habits.map(habit =>
-                    habit.id === id ? { ...habit, done: true } : habit
-                ));    
-            })
-            .catch(err => console.log(err.response.data));
-        }
-
+            .catch(err => {
+                alert(err.response.data.message);
+            });
     };
-        
 
+    function IconClickedWhenDoneIsTrue(id) {
+
+        setHabits(habits.map(habit =>
+            habit.id === id ? { ...habit, done: !habit.done } : habit
+        ));
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+
+        axios.post(`${BASEURL}/${id}/uncheck`, {}, config)
+            .then(() => {
+                setHabits(habits.map(habit =>
+                    habit.id === id ? { ...habit, done: false } : habit
+                ));
+            })
+            .catch(err => {
+                alert(err.response.data.message);
+            });
+    };
 
     return (
         <ContentToday>
@@ -77,10 +88,9 @@ export default function TodayInformation() {
                             </TodaysData>
                         </InformationsToday>
                         <CheckButton
-                            onClick={() => IconClicked(habit.id)}
-                            $clicked={habit.clicked}
+                            onClick={() => habit.done ? IconClickedWhenDoneIsTrue(habit.id) : IconClickedWhenDoneIsFalse(habit.id)}
                         >
-                            <CheckBoxIcon sx={{ fontSize: 95, color: habit.clicked ? "#4CAF50" : "#EBEBEB" }} />
+                            <IconCheck done={habit.done} sx={{ fontSize: 95 }} />
                         </CheckButton>
                     </BoxHabitToday>
                 )
@@ -88,6 +98,10 @@ export default function TodayInformation() {
         </ContentToday>
     )
 }
+
+const IconCheck = styled(CheckBoxIcon)`
+    color: ${props => props.done ? "#8fc549" : "#EBEBEB"}; 
+`
 
 const ContentToday = styled.div`
     font-family: "Lexend Deca", sans-serif;
@@ -135,7 +149,4 @@ const CheckButton = styled.div`
     display: flex;
     color: #EBEBEB;
     cursor: pointer;
-        ${({ $clicked }) => $clicked && `
-            color: #4CAF50;
-    `}
 `

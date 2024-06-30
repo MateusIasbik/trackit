@@ -1,20 +1,41 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Menu() {
 
+    const [activeButton, setActiveButton] = useState("today");
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        // Atualiza o botão ativo com base na rota atual
+        if (location.pathname === "/habitos") {
+          setActiveButton("habit");
+        } else if (location.pathname === "/hoje") {
+          setActiveButton("today");
+        }
+      }, [location.pathname]);
+    
+
+    function handleButtonClick(button) {
+        setActiveButton(button);
+
+        if(button === "habit"){
+            navigate("/habitos")
+        } else {
+            navigate("/hoje")
+        }
+    }
 
     return (
         <Footer>
             <ButtonHabit
-                onClick={() => {
-                    navigate("/habitos");
-                }}
-                to={"/habitos"}
+                onClick={() => handleButtonClick("habit")}
+                isActive={activeButton === "habit"}
+                // to={"/habitos"}
             >
                 <CalendarMonthIcon />
                 <span>
@@ -23,10 +44,9 @@ export default function Menu() {
             </ButtonHabit>
 
             <ButtonToday
-                onClick={() => {
-                    navigate("/hoje");
-                }}
-                to={"/hoje"}
+                onClick={() => handleButtonClick("today")}
+                isActive={activeButton === "today"}
+                // to={"/hoje"}
             >
                 <EventAvailableIcon />
                 <span>
@@ -40,7 +60,7 @@ export default function Menu() {
 const Footer = styled.div`
     width: 100%;
     height: 65px;
-    background-color: #F2F2F2;
+    background-color: #F2F2F2 ;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,14 +69,14 @@ const Footer = styled.div`
     left: 0;
 `
 
-const ButtonHabit = styled(Link)`
+const ButtonHabit = styled.div`
     height: 100%;
     width: 50%;
-    color: #FFF;
+    color: ${props => props.isActive ? "#FFF" : "#D4D4D4"};
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     font-weight: 400;
-    background-color: #52B6FF;
+    background-color: ${props => props.isActive ? "#52B6FF" : "#FFFFFF"};
     display: flex;
     align-items: center;
     justify-content: end;
@@ -71,11 +91,11 @@ const ButtonHabit = styled(Link)`
 const ButtonToday = styled.div`
     height: 100%;
     width: 50%;
-    color: #D4D4D4;
+    color: ${props => props.isActive ? "#FFF" : "#D4D4D4"};
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     font-weight: 400;
-    background-color: #FFFFFF;  
+    background-color: ${props => props.isActive ?  "#52B6FF" : "#FFFFFF"}; 
     display: flex;
     align-items: center;
     justify-content: start;

@@ -41,8 +41,8 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
     function sendHabit(e) {
         e.preventDefault();
         setShowAddHabit(false);
-        
-        if(dayClicked.length === 0) {
+
+        if (dayClicked.length === 0) {
             alert("Selecione no mínimo um dia da semana!")
             setShowAddHabit(true);
         }
@@ -72,7 +72,7 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                 console.log(err);
                 setLoading(false);
             })
-            
+
 
     }
 
@@ -128,17 +128,17 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                                 Cancelar
                             </p>
                             <button type="submit" disabled={loading}>
-                        {!loading ? "Salvar" : <ThreeDots
-                                visible={true}
-                                height="20"
-                                width="20"
-                                color="#ffffff"
-                                radius="9"
-                                ariaLabel="three-dots-loading"
-                                wrapperStyle={{}}
-                                wrapperClass=""
-                        />}
-                    </button>
+                                {!loading ? "Salvar" : <ThreeDots
+                                    visible={true}
+                                    height="20"
+                                    width="20"
+                                    color="#ffffff"
+                                    radius="9"
+                                    ariaLabel="three-dots-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""
+                                />}
+                            </button>
                         </BoxHabitsBottom>
                     </BoxHabits>
                 </form>

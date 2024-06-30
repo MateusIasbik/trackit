@@ -21,7 +21,7 @@ export default function Habits() {
             navigate("/");
             return;
         }
-    }, []);
+    }, [token]);
     
     return (
         <Container>
