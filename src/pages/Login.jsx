@@ -35,7 +35,6 @@ export default function Login() {
         setLoading(true);
         axios.post(URL, body)
             .then((res) => {
-                console.log(res.data.image);
                 setImgFace(res.data.image)
                 const imgFace = res.data.image;
                 localStorage.setItem("imgFace", imgFace);

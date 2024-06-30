@@ -19,7 +19,6 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
 
     const fetchHabits = () => {
         if (!token) {
-            console.log("Token não está disponível");
             return;
         }
 
@@ -31,10 +30,9 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
 
         axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
             .then(res => {
-                console.log(res.data);
                 setHabits(res.data);
             })
-            .catch(err => console.log(err.response.data));
+            .catch(err => alert(err.response.data.message));
 
     };
 
@@ -62,14 +60,12 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
         setLoading(true);
         axios.post(URL, body, config)
             .then(res => {
-                console.log(res.data);
                 setNameHabit("");
                 setDayClicked([]);
                 fetchHabits();
                 setLoading(false);
             })
             .catch(err => {
-                console.log(err);
                 setLoading(false);
             })
 
@@ -110,13 +106,13 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                                 disabled={loading}
                             />
                             <DayHabits>
-                                <DayButton disabled={loading} clicked={isDayClicked(0)} onClick={() => handleDayClick(0)}>D</DayButton>
-                                <DayButton disabled={loading} clicked={isDayClicked(1)} onClick={() => handleDayClick(1)}>S</DayButton>
-                                <DayButton disabled={loading} clicked={isDayClicked(2)} onClick={() => handleDayClick(2)}>T</DayButton>
-                                <DayButton disabled={loading} clicked={isDayClicked(3)} onClick={() => handleDayClick(3)}>Q</DayButton>
-                                <DayButton disabled={loading} clicked={isDayClicked(4)} onClick={() => handleDayClick(4)}>Q</DayButton>
-                                <DayButton disabled={loading} clicked={isDayClicked(5)} onClick={() => handleDayClick(5)}>S</DayButton>
-                                <DayButton disabled={loading} clicked={isDayClicked(6)} onClick={() => handleDayClick(6)}>S</DayButton>
+                                <DayButton disabled={loading} $clicked={isDayClicked(0)} onClick={() => handleDayClick(0)}>D</DayButton>
+                                <DayButton disabled={loading} $clicked={isDayClicked(1)} onClick={() => handleDayClick(1)}>S</DayButton>
+                                <DayButton disabled={loading} $clicked={isDayClicked(2)} onClick={() => handleDayClick(2)}>T</DayButton>
+                                <DayButton disabled={loading} $clicked={isDayClicked(3)} onClick={() => handleDayClick(3)}>Q</DayButton>
+                                <DayButton disabled={loading} $clicked={isDayClicked(4)} onClick={() => handleDayClick(4)}>Q</DayButton>
+                                <DayButton disabled={loading} $clicked={isDayClicked(5)} onClick={() => handleDayClick(5)}>S</DayButton>
+                                <DayButton disabled={loading} $clicked={isDayClicked(6)} onClick={() => handleDayClick(6)}>S</DayButton>
                             </DayHabits>
                         </BoxHabitsTop>
 
@@ -174,13 +170,13 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                                     <h2>{habit.name}</h2>
                                 </span>
                                 <DayHabits>
-                                    <DayButton disabled={false} clicked={isDayInHabit(0, habit.days)}>D</DayButton>
-                                    <DayButton disabled={false} clicked={isDayInHabit(1, habit.days)}>S</DayButton>
-                                    <DayButton disabled={false} clicked={isDayInHabit(2, habit.days)}>T</DayButton>
-                                    <DayButton disabled={false} clicked={isDayInHabit(3, habit.days)}>Q</DayButton>
-                                    <DayButton disabled={false} clicked={isDayInHabit(4, habit.days)}>Q</DayButton>
-                                    <DayButton disabled={false} clicked={isDayInHabit(5, habit.days)}>S</DayButton>
-                                    <DayButton disabled={false} clicked={isDayInHabit(6, habit.days)}>S</DayButton>
+                                    <DayButton disabled={false} $clicked={isDayInHabit(0, habit.days)}>D</DayButton>
+                                    <DayButton disabled={false} $clicked={isDayInHabit(1, habit.days)}>S</DayButton>
+                                    <DayButton disabled={false} $clicked={isDayInHabit(2, habit.days)}>T</DayButton>
+                                    <DayButton disabled={false} $clicked={isDayInHabit(3, habit.days)}>Q</DayButton>
+                                    <DayButton disabled={false} $clicked={isDayInHabit(4, habit.days)}>Q</DayButton>
+                                    <DayButton disabled={false} $clicked={isDayInHabit(5, habit.days)}>S</DayButton>
+                                    <DayButton disabled={false} $clicked={isDayInHabit(6, habit.days)}>S</DayButton>
                                 </DayHabits>
                             </HabitsDisplayed>
                         )
@@ -196,7 +192,6 @@ const MessageEmpty = styled.div`
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     font-weight: 400;
-    padding: 0 30px;
     text-align: left;
     margin-top: 20px;
  `
@@ -338,6 +333,6 @@ const DayButton = styled.p`
     margin-right: 4px;
     margin-top: 8px;
     cursor: pointer;
-    background-color: ${({ clicked }) => (clicked ? '#CFCFCF' : 'transparent')};
-    color: ${({ clicked }) => (clicked ? '#FFF' : '#D4D4D4')};
+    background-color: ${({ $clicked }) => ($clicked ? '#CFCFCF' : 'transparent')};
+    color: ${({ $clicked }) => ($clicked ? '#FFF' : '#D4D4D4')};
 `

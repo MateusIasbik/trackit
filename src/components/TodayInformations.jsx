@@ -3,12 +3,13 @@ import styled from "styled-components";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function TodayInformation() {
 
     const BASEURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
     const { token } = useContext(UserContext);
-    const [habits, setHabits] = useState([]);
+    const [habits, setHabits] = useState(null);
 
 
     useEffect(() => {
@@ -23,7 +24,7 @@ export default function TodayInformation() {
             .then(res => {
                 setHabits(res.data);
             })
-            .catch(err => console.log(err.response.data));
+            .catch(err => alert(err.response.data.message));
 
     }, []);
 
@@ -76,31 +77,57 @@ export default function TodayInformation() {
     };
 
     return (
+
         <ContentToday>
-            {habits.map(habit => {
-                return (
-                    <BoxHabitToday key={habit.id}>
-                        <InformationsToday>
-                            <h3>{habit.name}</h3>
-                            <TodaysData>
-                                <p>Sequência atual: {habit.currentSequence} dia(s)</p>
-                                <p>Seu recorde: {habit.highestSequence} dia(s)</p>
-                            </TodaysData>
-                        </InformationsToday>
-                        <CheckButton
-                            onClick={() => habit.done ? IconClickedWhenDoneIsTrue(habit.id) : IconClickedWhenDoneIsFalse(habit.id)}
-                        >
-                            <IconCheck done={habit.done} sx={{ fontSize: 95 }} />
-                        </CheckButton>
-                    </BoxHabitToday>
-                )
-            })}
+            {habits && habits.length === 0 && (
+                <MessageEmpty>
+                    Você não tem nenhum hábito cadastrado para hoje!
+                </MessageEmpty>
+            )}
+
+            {habits === null && (
+                <div>
+                    <ThreeDots
+                        visible={true}
+                        height="40"
+                        width="40"
+                        color="#126BA5"
+                        radius="9"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    />
+                </div>
+            )}
+
+            {habits && habits.length > 0 && (
+                habits.map(habit => {
+                    return (
+                        <BoxHabitToday key={habit.id}>
+                            <InformationsToday>
+                                <h3>{habit.name}</h3>
+                                <TodaysData>
+                                    <p>Sequência atual: {habit.currentSequence} dia(s)</p>
+                                    <p>Seu recorde: {habit.highestSequence} dia(s)</p>
+                                </TodaysData>
+                            </InformationsToday>
+                            <CheckButton
+                                onClick={() => habit.done ? IconClickedWhenDoneIsTrue(habit.id) : IconClickedWhenDoneIsFalse(habit.id)}
+                            >
+                                <IconCheck $done={habit.done} sx={{ fontSize: 95 }} />
+                            </CheckButton>
+                        </BoxHabitToday>
+                    )
+                })
+            )}
+
+
         </ContentToday>
     )
 }
 
 const IconCheck = styled(CheckBoxIcon)`
-    color: ${props => props.done ? "#8fc549" : "#EBEBEB"}; 
+    color: ${props => props.$done ? "#8fc549" : "#EBEBEB"}; 
 `
 
 const ContentToday = styled.div`
@@ -111,6 +138,7 @@ const ContentToday = styled.div`
     flex-direction: column;
     margin-top: 20px;
     justify-content: center;
+    align-items: center;
     width: 340px;
 `
 
@@ -150,3 +178,11 @@ const CheckButton = styled.div`
     color: #EBEBEB;
     cursor: pointer;
 `
+
+const MessageEmpty = styled.div`
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: left;
+    margin-top: 20px;
+ `

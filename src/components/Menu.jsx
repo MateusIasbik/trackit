@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Menu() {
 
@@ -11,7 +11,6 @@ export default function Menu() {
     const location = useLocation();
 
     useEffect(() => {
-        // Atualiza o botão ativo com base na rota atual
         if (location.pathname === "/habitos") {
           setActiveButton("habit");
         } else if (location.pathname === "/hoje") {
@@ -34,8 +33,7 @@ export default function Menu() {
         <Footer>
             <ButtonHabit
                 onClick={() => handleButtonClick("habit")}
-                isActive={activeButton === "habit"}
-                // to={"/habitos"}
+                $isActive={activeButton === "habit"}
             >
                 <CalendarMonthIcon />
                 <span>
@@ -45,8 +43,7 @@ export default function Menu() {
 
             <ButtonToday
                 onClick={() => handleButtonClick("today")}
-                isActive={activeButton === "today"}
-                // to={"/hoje"}
+                $isActive={activeButton === "today"}
             >
                 <EventAvailableIcon />
                 <span>
@@ -72,11 +69,11 @@ const Footer = styled.div`
 const ButtonHabit = styled.div`
     height: 100%;
     width: 50%;
-    color: ${props => props.isActive ? "#FFF" : "#D4D4D4"};
+    color: ${props => props.$isActive ? "#FFF" : "#D4D4D4"};
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     font-weight: 400;
-    background-color: ${props => props.isActive ? "#52B6FF" : "#FFFFFF"};
+    background-color: ${props => props.$isActive ? "#52B6FF" : "#FFFFFF"};
     display: flex;
     align-items: center;
     justify-content: end;
@@ -91,11 +88,11 @@ const ButtonHabit = styled.div`
 const ButtonToday = styled.div`
     height: 100%;
     width: 50%;
-    color: ${props => props.isActive ? "#FFF" : "#D4D4D4"};
+    color: ${props => props.$isActive ? "#FFF" : "#D4D4D4"};
     font-family: "Lexend Deca", sans-serif;
     font-size: 18px;
     font-weight: 400;
-    background-color: ${props => props.isActive ?  "#52B6FF" : "#FFFFFF"}; 
+    background-color: ${props => props.$isActive ?  "#52B6FF" : "#FFFFFF"}; 
     display: flex;
     align-items: center;
     justify-content: start;
