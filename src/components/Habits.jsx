@@ -60,6 +60,7 @@ const BodyStyled = styled.div`
     flex-direction: column;
     align-items: center;
     padding-bottom: 80px;
+    overflow-y: auto;
 `
 
 const Content = styled.div`

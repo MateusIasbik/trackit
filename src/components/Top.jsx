@@ -46,10 +46,14 @@ const HeadStyled = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 18px;
+    position: relative;
     }
 
     img {
+        position: absolute;
+        right: 20px;
         border-radius: 50%;
         height: 51px;
+        width: 51px;
     }
 `

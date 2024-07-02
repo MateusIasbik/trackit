@@ -65,11 +65,11 @@ const TitleToday = styled.div`
     margin-top: 27px;
 
     h2 {
-            color: #126BA5;
-            font-family: "Lexend Deca", sans-serif;
-            font-size: 23px;
-            font-weight: 400;
-            margin-left: 18px;
+        color: #126BA5;
+        font-family: "Lexend Deca", sans-serif;
+        font-size: 23px;
+        font-weight: 400;
+        margin-left: 18px;
         }
 `
 
