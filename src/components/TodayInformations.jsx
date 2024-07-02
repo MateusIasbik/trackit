@@ -26,7 +26,7 @@ export default function TodayInformation() {
             })
             .catch(err => alert(err.response.data.message));
 
-    }, []);
+    }, [habits]);
 
     function IconClickedWhenDoneIsFalse(id) {
 

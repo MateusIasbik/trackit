@@ -41,8 +41,9 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
         setShowAddHabit(false);
 
         if (dayClicked.length === 0) {
-            alert("Selecione no mínimo um dia da semana!")
+            alert("Selecione no mínimo um dia da semana!");
             setShowAddHabit(true);
+            return;
         }
 
         const URL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
