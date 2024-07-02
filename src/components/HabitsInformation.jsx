@@ -13,7 +13,6 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
     const [nameHabit, setNameHabit] = useState("");
 
     useEffect(() => {
-
         fetchHabits();
     }, []);
 
@@ -60,13 +59,13 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
 
         setLoading(true);
         axios.post(URL, body, config)
-            .then(res => {
+            .then(() => {
                 setNameHabit("");
                 setDayClicked([]);
                 fetchHabits();
                 setLoading(false);
             })
-            .catch(err => {
+            .catch(() => {
                 setLoading(false);
             })
 
@@ -120,6 +119,8 @@ export default function HabitsInformation({ showAddHabit, setShowAddHabit }) {
                         <BoxHabitsBottom>
                             <p onClick={() => {
                                 setShowAddHabit(false);
+                                setDayClicked([]);
+                                setNameHabit("");
                                 setDayClicked([]);
                             }}>
                                 Cancelar

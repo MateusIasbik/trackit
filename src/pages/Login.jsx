@@ -7,8 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import UserContext from "../contexts/UserContext";
 
 export default function Login() {
-    const { token, setToken, setImgFace } = useContext(UserContext);
-    const {setUser} = useContext(UserContext);
+    const { token, setToken, setImgFace, setUser } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [loading, setLoading] = useState(false);
@@ -42,12 +41,13 @@ export default function Login() {
                 setUser(res.data);
                 const token = res.data.token;
                 localStorage.setItem("token", token);
+
                 setToken(token);
                 navigate("/hoje");
                 setLoading(false);
             })
             .catch(err => {
-                alert(`${err.response.data.message}`);
+                alert(err.response.data.message);
                 setLoading(false);
             });
     }
@@ -130,13 +130,13 @@ const FormDiv = styled.div`
         }
 
         &:hover {
-            border-color: #52B6FF; /* Cor da borda ao passar o mouse */
+            border-color: #52B6FF;
         }
 
         &:focus {
-            border-color: #52B6FF; /* Cor da borda ao focar */
+            border-color: #52B6FF;
             outline: none;
-            color: #52B6FF; /* Cor da fonte ao focar */
+            color: #52B6FF;
         }
     }
 
