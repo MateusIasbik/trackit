@@ -14,6 +14,8 @@ export default function TodayInformation() {
 
     useEffect(() => {
 
+        if (!token) return;
+
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`
