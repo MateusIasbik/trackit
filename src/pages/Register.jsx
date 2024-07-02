@@ -30,8 +30,8 @@ export default function Register() {
                 navigate("/")
                 setLoading(false)
             })
-            .catch(() => {
-                alert(`Verifique os campos digitados e tente novamente!`)
+            .catch((err) => {
+                alert(err.response.data.message);
                 setLoading(false)
             });
     }
